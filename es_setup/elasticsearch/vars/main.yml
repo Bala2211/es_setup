@@ -1,0 +1,14 @@
+---
+java_download_url: https://download.java.net/java/early_access/jdk8/b03/BCL/jdk-8u202-ea-bin-b03-linux-x64-07_nov_2018.tar.gz
+java_download_folder: /home/esadmin/jdk
+java_name: "{{java_download_folder}}/jdk1.8.0_202"
+java_archive: "{{java_download_folder}}/jdk-8u202-ea-bin-b03-linux-x64-07_nov_2018.tar.gz"
+es_download_url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz
+es_download_folder: /home/esadmin/elasticsearch
+es_install_dir: "{{es_download_folder}}/elasticsearch-5.6.3"
+es_archive: "{{es_download_folder}}/elasticsearch-5.6.3.tar.gz"
+
+es_conf_dir: "{{es_install_dir}}/config"
+es_log_dir: "{{es_install_dir}}/logs"
+es_data_dirs: "{{es_install_dir}}/data"
+es_pid_dir: "{{es_log_dir}}"

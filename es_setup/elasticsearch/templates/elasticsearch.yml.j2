@@ -1,0 +1,11 @@
+---
+cluster.name: elasticsearch
+node.name: {{inventory_hostname}}
+node.master: {{es_config['node.master']}}
+node.data: {{es_config['node.data']}}
+path.conf: {{es_conf_dir}}
+path.data: {{es_data_dirs}}
+path.logs: {{es_log_dir}}
+network.host: {{inventory_hostname}}
+http.port: 9200
+discovery.zen.ping.unicast.hosts: ["esmn1.localdomain","esmn2.localdomain","esmn3.localdomain"]

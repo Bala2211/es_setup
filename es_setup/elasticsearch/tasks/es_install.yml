@@ -1,0 +1,23 @@
+---
+- name: create es download directory
+  file:
+    path: "{{es_download_folder}}"
+    state: directory
+
+- name: Download es
+  command: "wget -q -O {{es_archive}} --no-check-certificate --no-cookies {{es_download_url}} creates={{es_archive}}"
+
+- name: Unpack archive
+  command: "tar -zxf  {{es_archive}} -C {{es_download_folder}} creates={{es_install_dir}}"
+
+- name: Fix ownership
+  file: state=directory path={{es_install_dir}} owner={{owner}} group={{owner}} recurse=yes
+
+- name: add JAVA_HOME in bash_profile
+  action: lineinfile dest=/home/{{owner}}/.bash_profile regexp=ES_HOME line="export ES_HOME={{es_install_dir}}" state=present
+
+- name: add JAVA_HOME to env var PATH
+  action: lineinfile dest=/home/{{owner}}/.bash_profile regexp="PATH=.*ES_HOME.*" line="export PATH=$ES_HOME/bin:$PATH" state=present
+
+- name: Clean up
+  file: state=absent path={{es_archive}}

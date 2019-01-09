@@ -1,0 +1,23 @@
+---
+- name: create jdk directory
+  file:
+    path: "{{java_download_folder}}"
+    state: directory
+
+- name: Download Java
+  command: "wget -q -O {{java_archive}} --no-check-certificate --no-cookies --header 'Cookie: oraclelicense=accept-securebackup-cookie' {{java_download_url}} creates={{java_archive}}"
+
+- name: Unpack archive
+  command: "tar -zxf {{java_archive}} -C {{java_download_folder}} creates={{java_name}}"
+
+- name: Fix ownership
+  file: state=directory path={{java_name}} owner={{owner}} group={{owner}} recurse=yes
+
+- name: add JAVA_HOME in bash_profile
+  action: lineinfile dest=/home/{{owner}}/.bash_profile regexp=JAVA_HOME line="export JAVA_HOME={{java_name}}" state=present
+
+- name: add JAVA_HOME to env var PATH
+  action: lineinfile dest=/home/{{owner}}/.bash_profile regexp="PATH=.*JAVA_HOME.*" line="export PATH=$JAVA_HOME/bin:$PATH" state=present
+
+- name: Clean up
+  file: state=absent path={{java_archive}}

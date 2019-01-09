@@ -1,0 +1,16 @@
+---
+- hosts: es-master
+  roles:
+    - role: elasticsearch
+  vars:
+    es_config:
+      node.data: false
+      node.master: true
+
+- hosts: es-datanode
+  roles:
+    - role: elasticsearch
+  vars:
+    es_config:
+      node.data: true
+      node.master: false

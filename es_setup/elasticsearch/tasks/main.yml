@@ -1,0 +1,16 @@
+- name: include jdk8_install.yml
+  include: jdk8_install.yml
+  when: es_java_install
+  tags:
+      - java
+
+- name: include es_install.yml
+  include: es_install.yml
+  tags:
+      - install
+
+- name: include elasticsearch-config.yml
+  include: elasticsearch-config.yml
+  tags:
+      - config
+
